@@ -240,16 +240,21 @@ open http://localhost:8080
    - Failed episodes table with timestamps and error messages
    - Links to episode evidence where available
 
-### Medium Priority (Next Work)
-1. **PDF Scorecard Download** - UI button on run detail page
-   - Backend endpoint exists: `GET /api/v1/validations/{id}/scorecard.pdf`
-   - Frontend needs download button trigger
-   - Should work with browser's native PDF handler
+### Medium Priority ✅ COMPLETED (2024-10-08)
+1. **PDF Scorecard Download** - ✅ Complete
+   - Added "📄 Scorecard (PDF)" button to run detail page header
+   - Fetches from existing backend endpoint: `GET /api/v1/validations/{id}/scorecard.pdf`
+   - Shows loading state during download
+   - Downloads as `{run_id}-scorecard.pdf` via browser blob handling
+   - Error handling with user alert on failure
+   - Reuses Founder 1's PDF generation in `validsim/engine/pdf.py`
 
-2. **Comparison UI** - Side-by-side run comparison viewer
+### Low Priority (Next Work)
+1. **Comparison UI** - Side-by-side run comparison viewer
    - Backend endpoint ready: `POST /api/v1/validations/{id}/compare`
    - Regression report structure available
-   - Needs visualization of difference metrics
+   - Needs visualization of difference metrics (p-values, effect sizes)
+   - Would allow users to see how new runs compare to baselines visually
 
 3. **Model Comparison Page** - Interactive regression visualization
    - Compare multiple model versions side-by-side
