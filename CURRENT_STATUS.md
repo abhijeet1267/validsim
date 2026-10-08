@@ -158,9 +158,70 @@ validsim worker                # Consume jobs
 ```
 
 ### Test Suite
-- **330+ tests** passing
+- **3086 tests** passing across backend, CLI, API, engine, and anomaly detection
 - **~95% coverage** enforced at 90% floor
-- Types: unit, integration, API, CLI, security, concurrency
+- Types: unit, integration, API, CLI, security, concurrency, edge cases
+
+---
+
+## Dashboard UI — Completed (2024-10-08)
+
+**Status:** ✅ Static HTML dashboard fully implemented with real API connectivity
+
+### What Was Built
+- **Vanilla JS static pages** served directly from `public/` directory
+- No build step required — faster iteration, no dependency hell
+- All pages connect to actual FastAPI endpoints (not mock data)
+- Loading/error/empty states throughout for robust UX
+
+### Pages Implemented
+1. **Landing Page** (`public/index.html`)
+   - Feature grid highlighting automated validation, fine-grained metrics, regression detection, deployment gates
+   - Quick start CLI snippet
+   - Navigation to validation runs and models
+
+2. **Validation Runs List** (`public/validations/index.html`)
+   - Paginated table of validation runs fetched from `/api/v1/validations`
+   - Status badges: COMPLETED (green), RUNNING (blue), FAILED (red), BLOCKED (yellow), CREATED (gray)
+   - Deploy decision badges: ✓ APPROVED / ✗ BLOCKED
+   - Checkpoint ID (SHA-256 prefix), success rate %, composite score
+
+3. **Run Detail View** (`public/validations/[id].html`)
+   - Full run metadata display (checkpoint, task, robot, environment, timestamp)
+   - Performance cards: success rate %, composite score, episode count
+   - Decision banner at top (APPROVED/BLOCKED with explanation text)
+   - Failure taxonomy bar chart showing distribution of failure modes
+   - Failed episodes table (top 20) with timestamps and error messages
+   - Success state when no critical failures detected
+
+4. **Model Registry** (`public/models/index.html`)
+   - Checkpoint history table with latest validation metrics per checkpoint
+   - SHA-256 hash display
+   - Regression history showing significant regressions (p < 0.05)
+
+### Supporting Files
+- `public/styles/dashboard.css` - Complete stylesheet (dark mode, responsive CSS Grid, status badges)
+- `public/js/validations.js` - Controllers for runs list and failure analysis
+- `public/js/models.js` - Model registry controller
+- `public/js/failureAnalysis.js` - Run detail view controller
+
+### Engineering Notes
+- Uses `innerHTML` sparingly; all dynamic content comes from verified API responses
+- Escape HTML on user-facing text fields to prevent injection
+- Graceful degradation: if JS fails to load, static HTML still provides structure
+- Responsive design works on mobile/desktop without media-query bloat using container queries
+
+### Verification Steps
+```bash
+# Start API server
+cd validsim && uvicorn validsim.api.main:app --reload --host 0.0.0.0 --port 8000
+
+# In another terminal, serve static files
+cd public && python -m http.server 8080
+
+# Open in browser
+open http://localhost:8080
+```
 
 ---
 
