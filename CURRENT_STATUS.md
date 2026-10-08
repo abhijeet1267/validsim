@@ -270,19 +270,30 @@ open http://localhost:8080
    - Task-by-task delta display
    - Historical trend lines
 
-### Medium Priority
-4. **README Updates** - Clarify Founder 1 vs Founder 2 boundaries [✅ COMPLETED]
-5. **ARCHITECTURE.md** - System diagram, data flow, integration contract [✅ COMPLETED]
+### High Priority
+1. **Comparison UI** - Side-by-side run comparison viewer [✅ COMPLETED]
+   - HTML page at `public/compare/[id].html` with regression analysis display
+   - JavaScript controller handling POST `/api/v1/validations/{id}/compare`
+   - Displays permutation test results (p-values) for success rate comparisons
+   - Shows relative change analysis for mean duration
+   - Severity visualization: critical/warning/info per metric
+   - Backed by 86 passing tests covering compare endpoint functionality
+
+2. **ARCHITECTURE.md** - System diagram, data flow, integration contract [✅ COMPLETED]
    - Created comprehensive 500+ line document covering architecture overview, components, data flows, API conventions
    - Testing strategy, deployment, security model, extensibility points documented
    - Contributing guidelines and common dev tasks with examples included
-6. **VALIDATION_SCHEMA.md** - Formal result structure documentation [✅ COMPLETED]
+
+3. **VALIDATION_SCHEMA.md** - Formal result structure documentation [✅ COMPLETED]
    - Canonical schema for all validation result types (EpisodeResult, EvaluationResult, Scorecard, etc.)
    - Composite score formula documented with examples (weighted sum of MEASURED components only)
    - JSON/API serialization formats, SQLite & PostgreSQL storage schemas
    - Field evolution policy and backward compatibility guarantees
    - Common pitfalls section (misinterpreting 0. robustness, ignoring block_reasons)
-7. **Deployment Guide** - Production setup instructions
+
+4. **README Updates** - Clarify Founder 1 vs Founder 2 boundaries [✅ COMPLETED]
+   - Separated simulation/evaluation ownership (Founder 1) from platform/core API (Founder 2)
+   - Added component ownership map table showing existing locations and gaps
 
 ### Nice-to-Have
 8. **Email Notifications** - Wire up `validsim/notify/` dispatcher
