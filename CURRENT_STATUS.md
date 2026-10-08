@@ -271,8 +271,11 @@ open http://localhost:8080
    - Historical trend lines
 
 ### Medium Priority
-4. **README Updates** - Clarify Founder 1 vs Founder 2 boundaries
-5. **ARCHITECTURE.md** - System diagram, data flow, integration contract
+4. **README Updates** - Clarify Founder 1 vs Founder 2 boundaries [✅ COMPLETED]
+5. **ARCHITECTURE.md** - System diagram, data flow, integration contract [✅ COMPLETED]
+   - Created comprehensive 500+ line document covering architecture overview, components, data flows, API conventions
+   - Testing strategy, deployment, security model, extensibility points documented
+   - Contributing guidelines and common dev tasks with examples included
 6. **VALIDATION_SCHEMA.md** - Formal result structure documentation
 7. **Deployment Guide** - Production setup instructions
 
