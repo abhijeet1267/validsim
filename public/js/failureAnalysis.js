@@ -24,6 +24,12 @@ class FailureAnalysisController {
     domIds.forEach(id => {
       this.dom[id] = document.getElementById(id);
     });
+
+    // PDF download handler
+    this.downloadPdfBtn = document.getElementById('download-pdf-btn');
+    if (this.downloadPdfBtn) {
+      this.downloadPdfBtn.addEventListener('click', (e) => this.handlePdfDownload(e));
+    }
   }
 
   async init() {
@@ -224,6 +230,40 @@ class FailureAnalysisController {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+  }
+
+  async handlePdfDownload(e) {
+    e.preventDefault();
+    
+    if (!this.downloadPdfBtn) return;
+    
+    const originalText = this.downloadPdfBtn.textContent;
+    this.downloadPdfBtn.textContent = '⏳ Downloading...';
+    this.downloadPdfBtn.disabled = true;
+    
+    try {
+      const response = await fetch(`${API_BASE}/api/v1/validations/${this.runId}/scorecard.pdf`, {
+        headers: { 'Accept': 'application/pdf' }
+      });
+      
+      if (!response.ok) throw new Error(`HTTP ${response.status}`);
+      
+      const blob = await response.blob();
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `${this.runId}-scorecard.pdf`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(url);
+    } catch (error) {
+      console.error('Failed to download PDF:', error);
+      alert('Failed to download scorecard PDF. Please try again.');
+    } finally {
+      this.downloadPdfBtn.textContent = originalText;
+      this.downloadPdfBtn.disabled = false;
+    }
   }
 }
 
