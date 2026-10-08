@@ -276,7 +276,12 @@ open http://localhost:8080
    - Created comprehensive 500+ line document covering architecture overview, components, data flows, API conventions
    - Testing strategy, deployment, security model, extensibility points documented
    - Contributing guidelines and common dev tasks with examples included
-6. **VALIDATION_SCHEMA.md** - Formal result structure documentation
+6. **VALIDATION_SCHEMA.md** - Formal result structure documentation [✅ COMPLETED]
+   - Canonical schema for all validation result types (EpisodeResult, EvaluationResult, Scorecard, etc.)
+   - Composite score formula documented with examples (weighted sum of MEASURED components only)
+   - JSON/API serialization formats, SQLite & PostgreSQL storage schemas
+   - Field evolution policy and backward compatibility guarantees
+   - Common pitfalls section (misinterpreting 0. robustness, ignoring block_reasons)
 7. **Deployment Guide** - Production setup instructions
 
 ### Nice-to-Have
