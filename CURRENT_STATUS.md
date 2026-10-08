@@ -199,6 +199,15 @@ validsim worker                # Consume jobs
    - SHA-256 hash display
    - Regression history showing significant regressions (p < 0.05)
 
+5. **Comparison Viewer** (`public/compare/[id].html` + `public/js/comparison.js`)
+   - Side-by-side regression analysis between two validation runs
+   - POST `/api/v1/validations/{id}/compare` endpoint integration
+   - Permutation test results for success rate (p-values displayed)
+   - Relative change analysis for mean duration
+   - Severity badges: critical/warning/info per metric
+   - Key metrics summary card showing total regressions detected
+   - Links to view both current and baseline run details
+
 ### Supporting Files
 - `public/styles/dashboard.css` - Complete stylesheet (dark mode, responsive CSS Grid, status badges)
 - `public/js/validations.js` - Controllers for runs list and failure analysis
