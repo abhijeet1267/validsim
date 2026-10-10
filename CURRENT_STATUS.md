@@ -315,9 +315,10 @@ open http://localhost:8080
 
 **Next Steps:**
 1. ✅ Push branch to GitHub for CI validation - **COMPLETED**: PR #1 created at https://github.com/abhijeet1267/validsim/pull/1
-2. Run end-to-end verification against deployed API (requires DGX GPU credits for Isaac Sim integration)
-3. Implement any dashboard improvements flagged by user feedback
-4. Archive this worktree and prepare PR description from COMMIT_LOG
+2. ✅ Add production deployment guide - **COMPLETED**: `docs/production-deployment.md` (720 lines)
+3. Run end-to-end verification against deployed API (requires DGX GPU credits for Isaac Sim integration)
+4. Implement notification dispatch activation when SMTP/webhook credentials available
+5. Archive this worktree and prepare final PR description from COMMIT_LOG
 
 ---
 
