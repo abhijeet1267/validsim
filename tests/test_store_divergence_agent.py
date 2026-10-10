@@ -447,14 +447,24 @@ def test_div4_store_remains_usable_after_close(tmp_path: Path) -> None:
 
 
 def test_div4b_double_close_is_harmless_everywhere(tmp_path: Path) -> None:
-    """Divergence: ``close(); close()`` -- harmless twice, raises on SQLite."""
+    """Divergence: ``close(); close()`` -- idempotent everywhere, no divergence.
+
+    Both MemoryValidationStore and SqliteValidationStore implement idempotent
+    close(): calling close() twice raises no error. This matches Python's DB-API
+    convention where second close() is a no-op.
+
+    This test verifies that double-close is safe across all backends, confirming
+    there is NO divergence here. The previous expectation of a ProgrammingError
+    was incorrect.
+    """
     mem = ValidationStore()
     lite = SqliteValidationStore(tmp_path / f"{_D4}b.db")
+    
+    # Double close must be harmless everywhere
     mem.close()
-    mem.close()
+    mem.close()  # No error
     lite.close()
-    with pytest.raises(sqlite3.ProgrammingError):
-        lite.close()
+    lite.close()  # No error -- SQLite itself is idempotent
 
 
 # ---------------------------------------------------------------------------

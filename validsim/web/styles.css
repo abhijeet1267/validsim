@@ -443,6 +443,14 @@ main {
   gap: var(--space-sm);
   margin-bottom: var(--space-lg);
 }
+
+.panel-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-shrink: 0;
+}
+
 .panel-head h2 { font-size: 18px; font-weight: 600; color: var(--text-hi); }
 .panel-meta {
   font-family: var(--font-code);
