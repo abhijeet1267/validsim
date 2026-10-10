@@ -99,6 +99,8 @@
     jobsMeta: $("jobs-meta"),
     themeToggle: $("theme-toggle"),
     themeToggleText: $("theme-toggle-text"),
+    downloadPdfBtn: $("download-pdf-btn"),
+    pdfBtnLabel: $("pdf-btn-label"),
   };
 
   /* ------------------------------------------------------------------ */
@@ -1166,6 +1168,62 @@
       els.main.focus({ preventScroll: true });
     });
   }
+
+  /* ------------------------------------------------------------------ */
+  /* PDF download: fetch and trigger blob download                      */
+  /* ------------------------------------------------------------------ */
+
+  if (els.downloadPdfBtn) {
+    els.downloadPdfBtn.addEventListener("click", async () => {
+      if (!currentRunId) return;
+
+        // Disable button and show loading state
+      els.downloadPdfBtn.setAttribute("disabled", "");
+      els.pdfBtnLabel.textContent = "Downloading...";
+
+      try {
+        const response = await fetch(`/api/v1/validations/${currentRunId}/scorecard.pdf`, {
+          headers: authHeaders(),
+        });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        const filename = `${currentRunId}-scorecard.pdf`;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        els.pdfBtnLabel.textContent = "Download PDF";
+        announce(`PDF downloaded: ${filename}`);
+      } catch (err) {
+        els.pdfBtnLabel.textContent = "Download PDF";
+        els.downloadPdfBtn.removeAttribute("disabled");
+        announce(`Failed to download PDF: ${err.message}`, "assertive");
+      }
+    });
+  }
+
+  // Update button state whenever run ID changes
+  const originalRenderScorecard = renderScorecard;
+  renderScorecard = function(card, durationLabel) {
+    const result = originalRenderScorecard(card, durationLabel);
+    if (els.downloadPdfBtn) {
+      if (currentRunId) {
+        els.downloadPdfBtn.removeAttribute("disabled");
+      } else {
+        els.downloadPdfBtn.setAttribute("disabled", "");
+      }
+    }
+    return result;
+  };
 
   /* ------------------------------------------------------------------ */
   /* Bootstrap                                                            */
