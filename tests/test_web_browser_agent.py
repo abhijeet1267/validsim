@@ -127,8 +127,8 @@ def test_block_verdict_shows_its_reasons_in_a_real_browser(browser) -> None:
         assert card["block_reasons"], "expected a BLOCK with reasons"
 
         page = browser.new_page()
-        page.goto(f"http://127.0.0.1:{port}/", wait_until="networkidle")
-        page.wait_for_selector("#run-form", state="visible")
+        page.goto(f"http://127.0.0.1:{port}/", wait_until="domcontentloaded")
+        page.wait_for_selector("#run-form", state="visible", timeout=10000)
         page.click("#run-btn")
         page.wait_for_function(
             "() => !document.getElementById('block-reasons').hidden",
@@ -166,8 +166,8 @@ def test_auth_panel_replaces_the_dashboard_when_a_key_is_required(browser) -> No
     try:
         assert _wait_for(port), "server did not start"
         page = browser.new_page()
-        page.goto(f"http://127.0.0.1:{port}/static/index.html", wait_until="networkidle")
-        page.wait_for_selector("#auth-panel", state="visible", timeout=20000)
+        page.goto(f"http://127.0.0.1:{port}/static/index.html", wait_until="domcontentloaded")
+        page.wait_for_selector("#auth-panel", state="visible", timeout=10000)
         assert page.locator("#app-body").is_hidden()
         assert page.locator("#auth-status").is_visible()
         body = page.inner_text("body")
@@ -206,8 +206,9 @@ def test_root_entry_point_degrades_to_the_auth_panel(browser) -> None:
 
         # 1. "/" serves the application, not a JSON error.
         page = browser.new_page()
-        page.goto(f"http://127.0.0.1:{port}/", wait_until="networkidle")
-        page.wait_for_selector("#auth-panel", state="visible", timeout=20000)
+        page.goto(f"http://127.0.0.1:{port}/", wait_until="domcontentloaded")
+        # Wait for auth panel to appear (indicates SPA loaded)
+        page.wait_for_selector("#auth-panel", state="visible", timeout=10000)
         body = page.inner_text("body")
         assert "Missing or invalid API key" not in body
         assert '{"detail":' not in body
@@ -251,8 +252,8 @@ def test_wrong_key_is_rejected_without_leaving_a_stale_credential(browser) -> No
     try:
         assert _wait_for(port), "server did not start"
         page = browser.new_page()
-        page.goto(f"http://127.0.0.1:{port}/static/index.html", wait_until="networkidle")
-        page.wait_for_selector("#auth-panel", state="visible", timeout=20000)
+        page.goto(f"http://127.0.0.1:{port}/static/index.html", wait_until="domcontentloaded")
+        page.wait_for_selector("#auth-panel", state="visible", timeout=10000)
         page.fill("#api-key", "not-the-key")
         page.click("#auth-btn")
         page.wait_for_function(
