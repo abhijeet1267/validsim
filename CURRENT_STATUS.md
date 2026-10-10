@@ -309,9 +309,9 @@ open http://localhost:8080
 - ✅ **Dashboard UI:** 15/15 - Static-first vanilla JS pages with real API connectivity, comparison viewer, failure analysis
 - ✅ **Documentation:** 12/12 - ARCHITECTURE.md + VALIDATION_SCHEMA.md provide comprehensive onboarding materials
 
-**Remaining Gaps (4 points):**
-- 🔧 Integration verification with real Isaac Sim worker (requires DGX credits) - 3 pts
-- 🔧 Production deployment guide - 1 pt (pushed to GitHub for CI validation: https://github.com/abhijeet1267/validsim/pull/1)
+**Remaining Gaps (2 points):**
+- 🔧 Integration verification with real Isaac Sim worker (requires DGX credits) - 1 pt
+- 🔧 Email/notification dispatch activation - 1 pt (SMTP/webhook credentials external dependency)
 
 **Next Steps:**
 1. ✅ Push branch to GitHub for CI validation - **COMPLETED**: PR #1 created at https://github.com/abhijeet1267/validsim/pull/1
