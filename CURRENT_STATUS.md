@@ -309,15 +309,14 @@ open http://localhost:8080
 - ✅ **Dashboard UI:** 15/15 - Static-first vanilla JS pages with real API connectivity, comparison viewer, failure analysis
 - ✅ **Documentation:** 12/12 - ARCHITECTURE.md + VALIDATION_SCHEMA.md provide comprehensive onboarding materials
 
-**Remaining Gaps (2 points):**
+**Remaining Gaps (1 point):**
 - 🔧 Integration verification with real Isaac Sim worker (requires DGX credits) - 1 pt
-- 🔧 Email/notification dispatch activation - 1 pt (SMTP/webhook credentials external dependency)
 
 **Next Steps:**
 1. ✅ Push branch to GitHub for CI validation - **COMPLETED**: PR #1 created at https://github.com/abhijeet1267/validsim/pull/1
 2. ✅ Add production deployment guide - **COMPLETED**: `docs/production-deployment.md` (720 lines)
-3. Run end-to-end verification against deployed API (requires DGX GPU credits for Isaac Sim integration)
-4. Implement notification dispatch activation when SMTP/webhook credentials available
+3. ✅ Wire notification dispatcher into run completion flow - **COMPLETED**: Pipeline + health endpoint updated, 43 tests passing
+4. Run end-to-end verification against deployed API (requires DGX GPU credits for Isaac Sim integration)
 5. Archive this worktree and prepare final PR description from COMMIT_LOG
 
 ---
